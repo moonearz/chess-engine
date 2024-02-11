@@ -1,2 +1,2 @@
 all:
-	gcc engine.c -0 engine
+	gcc engine.c -o engine
