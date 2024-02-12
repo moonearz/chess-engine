@@ -1,10 +1,11 @@
+//structure from bluefever software youtube course
 #ifndef DEFS_H
 #define DEFS_H
 
 typedef unsigned long long U64;
 
 #define NAME "methane"
-#define BRD_SQ_NUM 120;
+#define BRD_SQ_NUM 120
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -24,6 +25,23 @@ enum {
 };
 
 enum{ FALSE, TRUE };
+
+typedef struct {
+    int pieces[BRD_SQ_NUM];
+    //represents the pawns using 64 bit integer, 00000000 01000000 ... corresponds to a pawn on b2
+    U64 pawns[3];
+    int KingSq[2];
+    int side;
+    int enPas;
+    int fiftyMove;
+    int ply;
+    int hisPly;
+    U64 posKey;
+    int pceNum[13];
+    int Pces[3];
+    int majPces[3];
+    int minPces[3];
+} S_BOARD;
 
 
 #endif
