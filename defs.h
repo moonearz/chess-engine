@@ -22,8 +22,6 @@ typedef unsigned long long U64;
 #define NAME "methane"
 #define BRD_SQ_NUM 120
 
-#define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPPP/RNBQKBNR w KQkq - 0 1"
-
 #define MAXGAMEMOVES 2048
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
