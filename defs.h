@@ -4,9 +4,8 @@
 
 #include "stdlib.h"
 
+//this should probably be changed eventually... already in debug mode???
 #ifndef DEBUG
-#define ASSERT(n)
-#else
 #define ASSERT(n) \
 if(!(n)) {\
 printf("%s - Failed", #n); \
@@ -15,6 +14,8 @@ printf("At %s ",__TIME__); \
 printf("In File %s ",__FILE__); \
 printf("At Line %d\n ",__LINE__); \
 exit(1);}
+#else
+#define ASSERT(n)
 #endif
 
 typedef unsigned long long U64;
@@ -123,5 +124,6 @@ extern void ResetBoard(S_BOARD *pos);
 extern int ParseFen(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
 extern void  UpdateListsMaterial(S_BOARD *pos);
+extern int CheckBoard(const S_BOARD *pos);
 
 #endif
