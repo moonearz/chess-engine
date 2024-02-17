@@ -68,9 +68,11 @@ typedef struct {
     int castlePerm;
     U64 posKey;
     int pceNum[13];
-    int Pces[3];
-    int majPces[3];
-    int minPces[3];
+    int Pces[2];
+    int majPces[2];
+    int minPces[2];
+    //point values
+    int material[2];
 
     S_UNDO history[MAXGAMEMOVES];
 
@@ -98,6 +100,11 @@ extern char PceChar[];
 extern char SideChar[];
 extern char RankChar[];
 extern char FileChar[];
+extern int Piece[13];
+extern int PieceMaj[13];
+extern int PieceMin[13];
+extern int PieceVal[13];
+extern int PieceCol[13];
 
 /*  FUNCTIONS   */
 //init.c
@@ -112,5 +119,6 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 extern void ResetBoard(S_BOARD *pos);
 extern int ParseFen(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
+extern void  UpdateListsMaterial(S_BOARD *pos);
 
 #endif
