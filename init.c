@@ -1,11 +1,12 @@
 #include "defs.h"
+#include "stdio.h"
 #include "stdlib.h"
 
 //generate random 15bit numbers and shift to use all 64
-#define RAND_64 (   (U64)rand() + \
-                    (U64)rand() << 15 + \
-                    (U64)rand() << 30 + \
-                    (U64)rand() << 45 + \
+#define RAND_64 (   (U64)rand() | \
+                    (U64)rand() << 15 | \
+                    (U64)rand() << 30 | \
+                    (U64)rand() << 45 | \
                     ((U64)rand() & 0xf) << 60 )
 
 int Sq120ToSq64[BRD_SQ_NUM];
