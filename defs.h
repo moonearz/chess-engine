@@ -50,12 +50,19 @@ enum{ FALSE, TRUE };
 enum{ WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
 
 typedef struct {
+
+    int move;
+    int score;
+} S_MOVE;
+
+typedef struct {
     int move;
     int castlePerm;
     int enPas;
     int fiftyMove;
     U64 posKey;
 } S_UNDO;
+
 typedef struct {
     int pieces[BRD_SQ_NUM];
     //represents the pawns using 64 bit integer, 00000000 01000000 ... corresponds to a pawn on b2
@@ -79,6 +86,16 @@ typedef struct {
 
     int pList[13][10];
 } S_BOARD;
+
+/* GAME MOVE */
+/*
+0000 0000 0000 0000 0000 0111 1111 ->From
+0000 0000 0000 0011 1111 1000 0000 ->To
+0000 0000 0011 1100 0000 0000 0000 ->Captured piece
+0000 0000 0100 0000 0000 0000 0000 ->EP capture?
+0000 0111 1000 0000 0000 0000 0000 ->PawnSt/Promotion piece
+0000 1000 0000 0000 0000 0000 0000 ->Castle
+*/
 
 /*  MACROS  */
 #define FR2SQ(f, r) ( (21 + (f)) + ( (r) * 10) )
