@@ -17,6 +17,17 @@ int main() {
     PrintBoard(board);
 
     ASSERT(CheckBoard(board));
+
+    //testing move macros
+    int move = 0;
+    int from = 6; int to = 12;
+    int cap = wR; int prom = bR;
+
+    move = ( ( from ) | ( to << 7 ) | ( cap << 14 ) | ( prom << 20 ) ) ;
+
+    printf("\ndec: %d hex: %X\n", move, move);
+
+    printf("from: %d to: %d cap: %d prom: %d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
     
     return 0;
 }
