@@ -12,13 +12,27 @@ int main() {
 
     S_BOARD board[1];
 
-    //testing examples
+    //testing from-to move
+    int move = 0;
+    int from = A2; int to = H7;
+    int cap = wR; int prom = bQ;
+    move = ( ( from ) | ( to << 7 ) | ( cap << 14 ) | ( prom << 20 ) ) ;
+    printf("from: %d to: %d cap: %d prom: %d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+    printf("Algebraic from: %s\n", PrSq(from));
+    printf("Algebraic to: %s\n", PrSq(to));
+    printf("Algebraic move: %s\n", PrMove(move));
+
+    //testing fen examples
+    /*
     ParseFen(FEN4, board);
     PrintBoard(board);
 
     ASSERT(CheckBoard(board));
+    */
+
 
     //testing move macros
+    /*
     int move = 0;
     int from = 6; int to = 12;
     int cap = wR; int prom = bR;
@@ -28,6 +42,7 @@ int main() {
     printf("\ndec: %d hex: %X\n", move, move);
 
     printf("from: %d to: %d cap: %d prom: %d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+    */
     
     return 0;
 }
