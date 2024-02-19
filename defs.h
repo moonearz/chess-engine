@@ -26,6 +26,7 @@ typedef unsigned long long U64;
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 #define MAXGAMEMOVES 2048
+#define MAXPOSITIONMOVES 256
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -54,6 +55,11 @@ typedef struct {
     int move;
     int score;
 } S_MOVE;
+
+typedef struct {
+    S_MOVE moves[MAXPOSITIONMOVES];
+    int count;
+} S_MOVELIST;
 
 typedef struct {
     int move;
@@ -170,5 +176,12 @@ extern int SqAttacked(const int sq, const int side, const S_BOARD *pos);
 //io.c
 extern char *PrSq(const int sq);
 extern char *PrMove(const int sq);
+//movegen.c
+//validate.c
+extern int SqOnBoard(const int sq);
+int SideValid(const int side);
+int FileRankValid(const int fr);
+int PieceValidEmpty(const int pce);
+extern int PieceValid(const int pce);
 
 #endif

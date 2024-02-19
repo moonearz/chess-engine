@@ -15,7 +15,7 @@ int main() {
     //testing from-to move
     int move = 0;
     int from = A2; int to = H7;
-    int cap = wR; int prom = bQ;
+    int cap = wR; int prom = wR;
     move = ( ( from ) | ( to << 7 ) | ( cap << 14 ) | ( prom << 20 ) ) ;
     printf("from: %d to: %d cap: %d prom: %d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
     printf("Algebraic from: %s\n", PrSq(from));
