@@ -176,7 +176,9 @@ extern int SqAttacked(const int sq, const int side, const S_BOARD *pos);
 //io.c
 extern char *PrSq(const int sq);
 extern char *PrMove(const int sq);
+extern void PrintMoveList(const S_MOVELIST *list);
 //movegen.c
+extern void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list);
 //validate.c
 extern int SqOnBoard(const int sq);
 int SideValid(const int side);
