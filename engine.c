@@ -13,13 +13,16 @@
 #define TEST_ROOKS "6k1/8/5r2/8/1nR5/5N2/8/6K1 b - - 0 1"
 #define TEST_QUEENS "6k1/8/4nq2/8/1nQ5/5N2/1N6/6K1 w - - 0 1"
 #define TEST_BISHOPS "6k1/1b6/4n3/8/1n4B1/1B3N2/1N6/2b3K1 b - - 0 1"
+#define TEST_CASTLING_1 "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1"
+#define TEST_CASTLING_2 "r3k2r/8/8/8/8/8/6p1/3RK2R w KQk - 0 1"
+
 int main() {
     AllInit();
 
     S_BOARD board[1];
 
     //testing move generation
-    ParseFen(TEST_BISHOPS, board);
+    ParseFen(TEST_CASTLING_2, board);
     PrintBoard(board);
 
     S_MOVELIST list[1];
