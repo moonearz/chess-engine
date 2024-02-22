@@ -122,6 +122,74 @@ static void MovePiece(const int from, const int to, S_BOARD *pos) {
     }
 }
 
+void TakeMove(S_BOARD *pos) {
+    ASSERT(CheckBoard(pos));
+
+    pos->hisPly--;
+    pos->ply--;
+
+    int move = pos->history[pos->hisPly].move;
+    int from = FROMSQ(move);
+    int to = TOSQ(move);
+
+    ASSERT(SqOnBoard(from));
+    ASSERT(SqOnBoard(to));
+
+    if(pos->enPas != NO_SQ) HASH_EP;
+    HASH_CA;
+
+    pos->castlePerm = pos->history[pos->hisPly].castlePerm;
+    pos->fiftyMove = pos->history[pos->hisPly].fiftyMove;
+    pos->enPas = pos->history[pos->hisPly].enPas;
+
+    if(pos->enPas != NO_SQ) HASH_EP;
+    HASH_CA;
+
+    pos->side ^= 1;
+    HASH_SIDE;
+
+    if(move & MFEP) {
+        if(pos->side == WHITE) {
+            AddPiece(to - 10, pos, bP);
+        }
+        else {
+            AddPiece(to + 10, pos, wP);
+        }
+    }
+    else if(move & MFCA) {
+        switch(to) {
+            case C1:
+                MovePiece(D1, A1, pos);
+            break;
+            case C8:
+                MovePiece(D8, A8, pos);
+            break;
+            case G1:
+                MovePiece(F1, H1, pos);
+            break;
+            case G8:
+                MovePiece(F8, H8, pos);
+            break;
+            default: ASSERT(FALSE); break;
+        }
+    }
+
+    MovePiece(to, from, pos);
+
+    int captured  = CAPTURED(move);
+    if(captured != EMPTY) {
+        ASSERT(PieceValid(captured));
+        AddPiece(to, pos, captured);
+    }
+
+    if(PROMOTED(move) != EMPTY) {
+        ASSERT(PieceValid(PROMOTED(move)) && !PiecePawn[PROMOTED(move)]);
+        ClearPiece(from, pos);
+        AddPiece(from, pos, (PieceCol[PROMOTED(move)] == WHITE ? wP : bP));
+    }
+    ASSERT(CheckBoard(pos));
+}
+
 int MakeMove(S_BOARD *pos, int move) {
     ASSERT(CheckBoard(pos));
 
@@ -223,9 +291,10 @@ int MakeMove(S_BOARD *pos, int move) {
     ASSERT(CheckBoard(pos));
 
     if(SqAttacked(pos->KingSq[side], pos->side, pos)) {
-        //TakeMove(pos);
+        TakeMove(pos);
         return FALSE;
     }
 
     return TRUE;
 }
+
