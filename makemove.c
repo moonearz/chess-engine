@@ -63,3 +63,61 @@ static void ClearPiece(const int sq, S_BOARD *pos) {
     pos->pceNum[pce]--;
     pos->pList[pce][t_pceNum] = pos->pList[pce][pos->pceNum[pce]];
 }
+
+static void AddPiece(const int sq, S_BOARD *pos, const int pce) {
+    ASSERT(PieceValid(pce));
+    ASSERT(SqOnBoard(sq));
+
+    int col = PieceCol[pce];
+    
+    HASH_PCE(pce, sq);
+
+    pos->pieces[sq] = pce;
+
+    if(Piece[pce]) {
+        pos->Pces[col]++;
+        if(PieceMaj[pce]) {
+            pos->majPces[col]++;
+        }
+        else {
+            pos->minPces[col]++;
+        }
+    }
+    else {
+        SETBIT(pos->pawns[col], SQ64(sq));
+        SETBIT(pos->pawns[BOTH], SQ64(sq));
+    }
+
+    pos->material[col] += PieceVal[pce];
+    pos->pList[pce][pos->pceNum[pce]++] = sq;
+}
+
+//ommiting debug assert to confirm finding piece
+static void MovePiece(const int from, const int to, S_BOARD *pos) {
+    ASSERT(SqOnBoard(from));
+    ASSERT(SqOnBoard(to));
+
+    int index = 0;
+    int pce = pos->pieces[from];
+    int col = PieceCol[pce];
+
+    HASH_PCE(pce, from);
+    pos->pieces[from] = EMPTY;
+
+    HASH_PCE(pce, to);
+    pos->pieces[to] = pce;
+
+    if(!Piece[pce]) {
+        CLRBIT(pos->pawns[col], SQ64(from));
+        CLRBIT(pos->pawns[BOTH], SQ64(from));
+        SETBIT(pos->pawns[col], SQ64(to));
+        SETBIT(pos->pawns[BOTH], SQ64(to));
+    }
+
+    for(index = 0; index < pos->pceNum[pce]; ++index) {
+        if(pos->pList[pce][index] == from) {
+            pos->pList[pce][index] = to;
+            break;
+        }
+    }
+}
