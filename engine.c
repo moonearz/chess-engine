@@ -24,12 +24,13 @@ int main() {
     S_MOVELIST list[1];
 
     //testing move generation
-    ParseFen(START_FEN, board);
-    perfttest(3, board);
-
-    //GenerateAllMoves(board, list);
+    ParseFen(TEST_TRICKY, board);
+    perfttest(4, board);
 
     /*
+    GenerateAllMoves(board, list);
+
+    
     int MoveNum = 0;
     int move = 0;
 
@@ -53,6 +54,7 @@ int main() {
         getchar();
     }
     */
+    
     //PrintMoveList(list);   
     
     return 0;

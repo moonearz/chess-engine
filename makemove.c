@@ -124,7 +124,6 @@ static void MovePiece(const int from, const int to, S_BOARD *pos) {
 
 void TakeMove(S_BOARD *pos) {
     ASSERT(CheckBoard(pos));
-
     pos->hisPly--;
     pos->ply--;
 
@@ -279,11 +278,12 @@ int MakeMove(S_BOARD *pos, int move) {
         ClearPiece(to, pos);
         AddPiece(to, pos, prPce);
     }
-    /*not neccesary? 
+    
     if(PieceKing[pos->pieces[to]]) {
         pos->KingSq[pos->side] = to;
     }
-    */
+    
+    
 
     pos->side ^= 1;
     HASH_SIDE;

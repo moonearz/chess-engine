@@ -4,8 +4,11 @@
 
 #include "stdlib.h"
 
-//this should probably be changed eventually... already in debug mode???
+#define DEBUG
+
 #ifndef DEBUG
+#define ASSERT(n)
+#else
 #define ASSERT(n) \
 if(!(n)) {\
 printf("%s - Failed", #n); \
@@ -14,8 +17,6 @@ printf("At %s ",__TIME__); \
 printf("In File %s ",__FILE__); \
 printf("At Line %d\n ",__LINE__); \
 exit(1);}
-#else
-#define ASSERT(n)
 #endif
 
 typedef unsigned long long U64;

@@ -46,10 +46,11 @@ void perfttest(int depth, S_BOARD *pos) {
             continue;
         }
         long sumNodes = leafNodes;
+        //error is here
         perft(depth - 1, pos);
         TakeMove(pos);
         long oldNodes = leafNodes - sumNodes;
-        printf("move %d : %s : %ld\n", MoveNum + 1, PrMove(move), oldNodes);
+        printf("move %d: %s: %ld\n", MoveNum + 1, PrMove(move), oldNodes);
     }
 
     printf("\ntest complete visiting %ld leaf nodes\n", leafNodes);

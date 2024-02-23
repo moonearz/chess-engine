@@ -134,7 +134,7 @@ void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list) {
             ASSERT(SqOnBoard(sq));
 
             if(pos->pieces[sq + 10] == EMPTY) {
-                AddWPQuietMove(pos, sq, sq+10, list);
+                AddWPQuietMove(pos, sq, (sq+10), list);
                 if(RanksBrd[sq] == RANK_2 && pos->pieces[sq + 20] == EMPTY) {
                     AddQuietMove(pos, MOVE(sq, (sq+20), EMPTY, EMPTY, MFPS), list);
                 }
@@ -145,7 +145,7 @@ void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list) {
             }
 
             if(!SQOFFBOARD(sq + 11) && PieceCol[pos->pieces[sq + 11]] == BLACK) {
-                AddWPCapMove(pos, sq, sq + 9, pos->pieces[sq + 11], list);
+                AddWPCapMove(pos, sq, sq + 11, pos->pieces[sq + 11], list);
             }
 
             if(sq + 9 == pos->enPas) {
