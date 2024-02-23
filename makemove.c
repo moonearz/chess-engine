@@ -92,7 +92,6 @@ static void AddPiece(const int sq, S_BOARD *pos, const int pce) {
     pos->pList[pce][pos->pceNum[pce]++] = sq;
 }
 
-//ommiting debug assert to confirm finding piece
 static void MovePiece(const int from, const int to, S_BOARD *pos) {
     ASSERT(SqOnBoard(from));
     ASSERT(SqOnBoard(to));
@@ -100,6 +99,12 @@ static void MovePiece(const int from, const int to, S_BOARD *pos) {
     int index = 0;
     int pce = pos->pieces[from];
     int col = PieceCol[pce];
+    ASSERT(SideValid(col));
+    ASSERT(PieceValid(pce));
+
+#ifdef DEBUG
+    int t_PieceNum = FALSE;
+#endif
 
     HASH_PCE(pce, from);
     pos->pieces[from] = EMPTY;
@@ -117,9 +122,14 @@ static void MovePiece(const int from, const int to, S_BOARD *pos) {
     for(index = 0; index < pos->pceNum[pce]; ++index) {
         if(pos->pList[pce][index] == from) {
             pos->pList[pce][index] = to;
+#ifdef DEBUG
+    t_PieceNum = TRUE;
+#endif
             break;
         }
     }
+    //printf("%d\n", t_PieceNum);
+    ASSERT(t_PieceNum);
 }
 
 void TakeMove(S_BOARD *pos) {
@@ -174,6 +184,10 @@ void TakeMove(S_BOARD *pos) {
     }
 
     MovePiece(to, from, pos);
+
+    if(PieceKing[pos->pieces[from]]) {
+        pos->KingSq[pos->side] = from;
+    }
 
     int captured  = CAPTURED(move);
     if(captured != EMPTY) {
@@ -281,9 +295,7 @@ int MakeMove(S_BOARD *pos, int move) {
     
     if(PieceKing[pos->pieces[to]]) {
         pos->KingSq[pos->side] = to;
-    }
-    
-    
+    }  
 
     pos->side ^= 1;
     HASH_SIDE;

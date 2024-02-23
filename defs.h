@@ -4,8 +4,6 @@
 
 #include "stdlib.h"
 
-#define DEBUG
-
 #ifndef DEBUG
 #define ASSERT(n)
 #else
