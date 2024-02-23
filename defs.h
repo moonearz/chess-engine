@@ -187,5 +187,10 @@ int SideValid(const int side);
 int FileRankValid(const int fr);
 int PieceValidEmpty(const int pce);
 extern int PieceValid(const int pce);
+//makemove.c
+extern int MakeMove(S_BOARD *pos, int move);
+extern void TakeMove(S_BOARD *pos);
+//perft.c
+void perfttest(int depth, S_BOARD *pos);
 
 #endif

@@ -21,16 +21,39 @@ int main() {
     AllInit();
 
     S_BOARD board[1];
-
-    //testing move generation
-    ParseFen(TEST_TRICKY, board);
-    PrintBoard(board);
-
     S_MOVELIST list[1];
 
-    GenerateAllMoves(board, list);
+    //testing move generation
+    ParseFen(START_FEN, board);
+    perfttest(3, board);
 
-    PrintMoveList(list);   
+    //GenerateAllMoves(board, list);
+
+    /*
+    int MoveNum = 0;
+    int move = 0;
+
+    
+    PrintBoard(board);
+    getchar();
+
+    for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
+        move = list->moves[MoveNum].move;
+
+        if(!MakeMove(board, move)) {
+            continue;
+        }
+
+        printf("\nmade the move: %s\n", PrMove(move));
+        PrintBoard(board);
+
+        TakeMove(board);
+        printf("\nundid: %s\n", PrMove(move));
+
+        getchar();
+    }
+    */
+    //PrintMoveList(list);   
     
     return 0;
 }
