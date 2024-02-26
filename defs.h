@@ -206,7 +206,7 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 extern void ResetBoard(S_BOARD *pos);
 extern int ParseFen(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
-extern void  UpdateListsMaterial(S_BOARD *pos);
+extern void UpdateListsMaterial(S_BOARD *pos);
 extern int CheckBoard(const S_BOARD *pos);
 //attack.c
 extern int SqAttacked(const int sq, const int side, const S_BOARD *pos);
@@ -230,7 +230,7 @@ extern void TakeMove(S_BOARD *pos);
 //perft.c
 extern void perfttest(int depth, S_BOARD *pos);
 //search.c
-extern void SearchPosition(S_BOARD *pos);
+extern void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info);
 //misc.c
 extern int GetTimeMs();
 //pvtable.c
@@ -238,5 +238,7 @@ extern void InitPvTable(S_PVTABLE *table);
 extern void StorePvMove(const S_BOARD *pos, const int move);
 extern int ProbePvTable(const S_BOARD *pos);
 extern int GetPvLine(const int depth, S_BOARD *pos);
+//evaluate.c
+extern int EvalPosition(const S_BOARD *pos);
 
 #endif
