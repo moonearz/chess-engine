@@ -104,7 +104,27 @@ typedef struct {
 
     S_PVTABLE PvTable[1];
     int PvArray[MAXDEPTH];
+
+    //move ordering
+    int searchHistory[13][BRD_SQ_NUM];
+    int searchEnders[2][MAXDEPTH];
 } S_BOARD;
+
+typedef struct {
+    //control thinking time
+    int starttime;
+    int stoptime;
+    int depth;
+    int depthset;
+    int timeset;
+    int movestogo;
+    int infinite;
+
+    long nodes;
+    
+    int quit;
+    int stopped;
+} S_SEARCHINFO;
 
 /* GAME MOVE */
 /*
