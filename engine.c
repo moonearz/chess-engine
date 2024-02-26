@@ -27,10 +27,40 @@ int main() {
     S_BOARD board[1];
     S_MOVELIST list[1];
 
-    //testing move generation
-    ParseFen(PERFT_4, board);
-    perfttest(4, board);
+    //PARSE MOVES, NEED VALID INPUT
+    ParseFen(START_FEN, board);
+    char input[6];
+    int Move = NOMOVE;
 
+    while(TRUE) {
+        PrintBoard(board);
+        printf("enter a move: \n");
+        fgets(input, 6, stdin);
+
+        if(input[0] == 'q') {
+            break;
+        }
+        else if(input [0] == 't') {
+            TakeMove(board);
+        }
+        else {
+            Move = ParseMove(input, board);
+            if(Move != NOMOVE) {
+                MakeMove(board, Move);
+            }
+        }
+
+        fflush(stdin);
+    }
+
+
+    //TEST MOVE GENERATION
+    /*
+    ParseFen(START_FEN, board);
+    perfttest(4, board);
+    */
+
+    //ITERATE THROUGH MOVE LIST
     /*
     GenerateAllMoves(board, list);
 
@@ -58,8 +88,6 @@ int main() {
         getchar();
     }
     */
-    
-    //PrintMoveList(list);   
     
     return 0;
 }
