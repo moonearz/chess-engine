@@ -34,7 +34,7 @@ int main() {
 
     while(TRUE) {
         PrintBoard(board);
-        printf("enter a move: \n");
+        printf("enter a move: ");
         fgets(input, 6, stdin);
 
         if(input[0] == 'q') {
@@ -47,6 +47,14 @@ int main() {
             Move = ParseMove(input, board);
             if(Move != NOMOVE) {
                 MakeMove(board, Move);
+                /*
+                if(IsRepetition(board)) {
+                    printf("REP SEEN\n");
+                }
+                */
+            }
+            else {
+                printf("%s not parsed\n", input);
             }
         }
 
