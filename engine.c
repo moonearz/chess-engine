@@ -43,6 +43,9 @@ int main() {
         else if(input [0] == 't') {
             TakeMove(board);
         }
+        else if(input[0] == 'p') {
+            perfttest(4, board);
+        }
         else {
             Move = ParseMove(input, board);
             if(Move != NOMOVE) {

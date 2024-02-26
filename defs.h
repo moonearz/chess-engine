@@ -195,6 +195,8 @@ extern void TakeMove(S_BOARD *pos);
 //perft.c
 extern void perfttest(int depth, S_BOARD *pos);
 //search.c
-extern int IsRepetition(const S_BOARD *pos);
+extern void SearchPosition(S_BOARD *pos);
+//misc.c
+extern int GetTimeMs();
 
 #endif
