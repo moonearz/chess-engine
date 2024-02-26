@@ -31,6 +31,8 @@ int main() {
     ParseFen(START_FEN, board);
     char input[6];
     int Move = NOMOVE;
+    int pvnum = 0;
+    int max = 0;
 
     while(TRUE) {
         PrintBoard(board);
@@ -44,17 +46,20 @@ int main() {
             TakeMove(board);
         }
         else if(input[0] == 'p') {
-            perfttest(4, board);
+            //perfttest(4, board);
+            max = GetPvLine(4, board);
+            printf("pvline of %d moves: ", max);
+            for(pvnum = 0; pvnum < max; ++pvnum) {
+                Move = board->PvArray[pvnum];
+                printf(" %s", PrMove(Move));
+            }
+            printf("\n");
         }
         else {
             Move = ParseMove(input, board);
             if(Move != NOMOVE) {
+                StorePvMove(board, Move);
                 MakeMove(board, Move);
-                /*
-                if(IsRepetition(board)) {
-                    printf("REP SEEN\n");
-                }
-                */
             }
             else {
                 printf("%s not parsed\n", input);

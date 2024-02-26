@@ -26,6 +26,7 @@ typedef unsigned long long U64;
 
 #define MAXGAMEMOVES 2048
 #define MAXPOSITIONMOVES 256
+#define MAXDEPTH 64
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -102,6 +103,7 @@ typedef struct {
     int pList[13][10];
 
     S_PVTABLE PvTable[1];
+    int PvArray[MAXDEPTH];
 } S_BOARD;
 
 /* GAME MOVE */
@@ -195,6 +197,7 @@ extern void PrintMoveList(const S_MOVELIST *list);
 extern int ParseMove(char *ptrChar, S_BOARD *pos);
 //movegen.c
 extern void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list);
+extern int MoveExists(S_BOARD *pos, const int move);
 //validate.c
 extern int SqOnBoard(const int sq);
 int SideValid(const int side);
@@ -214,5 +217,6 @@ extern int GetTimeMs();
 extern void InitPvTable(S_PVTABLE *table);
 extern void StorePvMove(const S_BOARD *pos, const int move);
 extern int ProbePvTable(const S_BOARD *pos);
+extern int GetPvLine(const int depth, S_BOARD *pos);
 
 #endif

@@ -3,6 +3,32 @@
 
 const int PvSize = 0x100000 * 2;
 
+int GetPvLine(const int depth, S_BOARD *pos) {
+    ASSERT(depth < MAXDEPTH);
+
+    int move = ProbePvTable(pos);
+    int count = 0;
+
+    while(move != NOMOVE && count < depth) {
+        ASSERT(count < MAXDEPTH);
+
+        if(MoveExists(pos, move)) {
+            MakeMove(pos, move);
+            pos->PvArray[count++] = move;
+        }
+        else {
+            break;
+        }
+        move = ProbePvTable(pos);
+    }
+
+    while(pos->ply > 0) {
+        TakeMove(pos);
+    }
+
+    return count;
+}
+
 void ClearTable(S_PVTABLE *table) {
     S_PVENTRY *PvEntry;
     
