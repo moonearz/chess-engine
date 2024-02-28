@@ -79,12 +79,12 @@ int EvalPosition(const S_BOARD *pos) {
         ASSERT(SqOnBoard(sq));
         score += PawnTable[SQ64(sq)];
     }
-
+    
     pce = bP;
     for(pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum) {
         sq = pos->pList[pce][pceNum];
         ASSERT(SqOnBoard(sq));
-        score -= PawnTable[MIRROR64(sq)];
+        score -= PawnTable[MIRROR64(SQ64(sq))];
     }
 
     pce = wN;	

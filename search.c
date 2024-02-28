@@ -42,6 +42,8 @@ static void ClearForSearch(S_BOARD *pos, S_SEARCHINFO *info) {
     info->starttime = GetTimeMs();
     info->stopped = 0;
     info->nodes = 0;
+    info->fh = 0;
+    info->fhf = 0;
 }
 
 static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
@@ -80,11 +82,15 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
         }
 
         Legal++;
-        Score = -AlphaBeta(-beta, -alpha, depth - 1, pos, info, TRUE);
+        Score = -AlphaBeta(-beta, -alpha, depth-1, pos, info, TRUE);
         TakeMove(pos);
 
         if(Score > alpha) {
             if(Score >= beta) {
+                if(Legal == 1) {
+                    info->fhf++;
+                }
+                info->fh++;
                 return beta;
             }
             alpha = Score;
@@ -104,7 +110,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
     if(alpha != OldAlpha) {
         StorePvMove(pos, BestMove);
     }
-
+    
     return alpha;
 }
 
@@ -128,5 +134,6 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
                 printf(" %s", PrMove(pos->PvArray[pvNum]));
             }
             printf("\n");
+            printf("Ordering: %.2f\n", info->fhf/info->fh);
     }
 }

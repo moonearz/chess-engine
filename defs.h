@@ -4,6 +4,8 @@
 
 #include "stdlib.h"
 
+#define DEBUG
+
 #ifndef DEBUG
 #define ASSERT(n)
 #else
@@ -126,6 +128,9 @@ typedef struct {
     
     int quit;
     int stopped;
+
+    float fh;
+    float fhf;
 } S_SEARCHINFO;
 
 /* GAME MOVE */

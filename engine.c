@@ -26,6 +26,7 @@ int main() {
 
     S_BOARD board[1];
     S_MOVELIST list[1];
+    S_SEARCHINFO info[1];
 
     //PARSE MOVES, NEED VALID INPUT
     ParseFen(START_FEN, board);
@@ -45,15 +46,9 @@ int main() {
         else if(input [0] == 't') {
             TakeMove(board);
         }
-        else if(input[0] == 'p') {
-            //perfttest(4, board);
-            max = GetPvLine(4, board);
-            printf("pvline of %d moves: ", max);
-            for(pvnum = 0; pvnum < max; ++pvnum) {
-                Move = board->PvArray[pvnum];
-                printf(" %s", PrMove(Move));
-            }
-            printf("\n");
+        else if(input[0] == 's') {
+            info->depth = 4;
+            SearchPosition(board, info);
         }
         else {
             Move = ParseMove(input, board);
