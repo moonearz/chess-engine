@@ -59,7 +59,6 @@ static void ClearForSearch(S_BOARD *pos, S_SEARCHINFO *info) {
     ClearTable(pos->PvTable);
     pos->ply = 0;
 
-    info->starttime = GetTimeMs();
     info->stopped = 0;
     info->nodes = 0;
     info->fh = 0;
@@ -252,7 +251,7 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
                 printf(" %s", PrMove(pos->PvArray[pvNum]));
             }
             printf("\n");
-            printf("Ordering: %.2f\n", info->fhf/info->fh);
+            //printf("Ordering: %.2f\n", info->fhf/info->fh);
     }
     /* 
     UCI protocol format:
