@@ -3,7 +3,10 @@
 
 const int PawnIsolated = -10;
 const int PawnPassed[8] = { 0, 5, 10, 20, 35, 60, 100, 200};
-const int RookOpenFile = 5;
+const int RookOpenFile = 10;
+const int RookSemiOpenFile = 5;
+const int QueenOpenFile = 5;
+const int QueenSemiOpenFile = 3;
 
 const int PawnTable[64] = {
 0	,	0	,	0	,	0	,	0	,	0	,	0	,	0	,
@@ -145,6 +148,13 @@ int EvalPosition(const S_BOARD *pos) {
 		ASSERT(SqOnBoard(sq));
 		ASSERT(SQ64(sq)>=0 && SQ64(sq)<=63);
 		score += RookTable[SQ64(sq)];
+
+		if(!(pos->pawns[BOTH] & FileBBMask[FilesBrd[sq]])) {
+			score += RookOpenFile;
+		}
+		else if(!(pos->pawns[WHITE] & FileBBMask[FilesBrd[sq]])) {
+			score += RookSemiOpenFile;
+		}
 	}	
 
 	pce = bR;	
@@ -153,7 +163,37 @@ int EvalPosition(const S_BOARD *pos) {
 		ASSERT(SqOnBoard(sq));
 		ASSERT(MIRROR64(SQ64(sq))>=0 && MIRROR64(SQ64(sq))<=63);
 		score -= RookTable[MIRROR64(SQ64(sq))];
-	}			
+		if(!(pos->pawns[BOTH] & FileBBMask[FilesBrd[sq]])) {
+			score -= RookOpenFile;
+		}
+		else if(!(pos->pawns[BLACK] & FileBBMask[FilesBrd[sq]])) {
+			score -= RookSemiOpenFile;
+		}
+	}	
+
+	pce = wQ;
+	for(pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum) {
+		sq = pos->pList[pce][pceNum];
+		ASSERT(SqOnBoard(sq));
+		if(!(pos->pawns[BOTH] & FileBBMask[FilesBrd[sq]])) {
+			score += QueenOpenFile;
+		}
+		else if(!(pos->pawns[WHITE] & FileBBMask[FilesBrd[sq]])) {
+			score += QueenSemiOpenFile;
+		}
+	}	
+
+	pce = bQ;
+	for(pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum) {
+		sq = pos->pList[pce][pceNum];
+		ASSERT(SqOnBoard(sq));
+		if(!(pos->pawns[BOTH] & FileBBMask[FilesBrd[sq]])) {
+			score -= QueenOpenFile;
+		}
+		else if(!(pos->pawns[BLACK] & FileBBMask[FilesBrd[sq]])) {
+			score -= QueenSemiOpenFile;
+		}
+	}		
 	
     if(pos->side == WHITE) {
         return score;
