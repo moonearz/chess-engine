@@ -254,5 +254,7 @@ extern int GetPvLine(const int depth, S_BOARD *pos);
 extern void ClearTable(S_PVTABLE *table);
 //evaluate.c
 extern int EvalPosition(const S_BOARD *pos);
+//uci.c
+extern void UCILoop();
 
 #endif

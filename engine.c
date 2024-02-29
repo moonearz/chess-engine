@@ -25,13 +25,58 @@
 
 int main() {
     AllInit();
+    UCILoop();
+    return 0;
+}
+
+//PREVIOUS CODE TESTS:
+    //INITIALIZATIONS
+    /*
+    AllInit();
 
     S_BOARD board[1];
     InitPvTable(board->PvTable);
     S_MOVELIST list[1];
     S_SEARCHINFO info[1];
+    */
 
+   //TEST MOVE GENERATION
+    /*
+    ParseFen(START_FEN, board);
+    perfttest(4, board);
+    */
+
+    //ITERATE THROUGH MOVE LIST
+    /*
+    GenerateAllMoves(board, list);
+
+    
+    int MoveNum = 0;
+    int move = 0;
+
+    
+    PrintBoard(board);
+    getchar();
+
+    for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
+        move = list->moves[MoveNum].move;
+
+        if(!MakeMove(board, move)) {
+            continue;
+        }
+
+        printf("\nmade the move: %s\n", PrMove(move));
+        PrintBoard(board);
+
+        TakeMove(board);
+        printf("\nundid: %s\n", PrMove(move));
+
+        getchar();
+    }
+    */
+    /*
     //PARSE MOVES, NEED VALID INPUT
+
     ParseFen(SCOTCH_GAME, board);
     char input[6];
     int Move = NOMOVE;
@@ -68,42 +113,4 @@ int main() {
 
         fflush(stdin);
     }
-
-
-    //TEST MOVE GENERATION
-    /*
-    ParseFen(START_FEN, board);
-    perfttest(4, board);
     */
-
-    //ITERATE THROUGH MOVE LIST
-    /*
-    GenerateAllMoves(board, list);
-
-    
-    int MoveNum = 0;
-    int move = 0;
-
-    
-    PrintBoard(board);
-    getchar();
-
-    for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
-        move = list->moves[MoveNum].move;
-
-        if(!MakeMove(board, move)) {
-            continue;
-        }
-
-        printf("\nmade the move: %s\n", PrMove(move));
-        PrintBoard(board);
-
-        TakeMove(board);
-        printf("\nundid: %s\n", PrMove(move));
-
-        getchar();
-    }
-    */
-    free(board->PvTable->pTable);
-    return 0;
-}
