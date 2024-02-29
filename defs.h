@@ -4,7 +4,7 @@
 
 #include "stdlib.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifndef DEBUG
 #define ASSERT(n)
@@ -229,6 +229,7 @@ extern int ParseMove(char *ptrChar, S_BOARD *pos);
 //movegen.c
 extern void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list);
 extern int MoveExists(S_BOARD *pos, const int move);
+extern int InitMvvLva();
 //validate.c
 extern int SqOnBoard(const int sq);
 int SideValid(const int side);
