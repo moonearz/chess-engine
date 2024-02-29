@@ -7,6 +7,22 @@ static void CheckIn() {
 
 }
 
+static void PickNextMove(int moveNum, S_MOVELIST *list) {
+    S_MOVE temp;
+    int index = 0;
+    int bestScore = 0;
+    int bestNum = moveNum;
+
+    for(index = moveNum; index < list->count; ++index) {
+        if(list->moves[index].score > bestScore) {
+            bestScore = list->moves[index].score;
+            bestNum = index;
+        }
+    }
+    temp = list->moves[moveNum];
+    list->moves[moveNum] = list->moves[bestNum];
+    list->moves[bestNum] = temp;
+}
 static int IsRepetition(const S_BOARD *pos) {
     int index = 0;
 
@@ -78,6 +94,8 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
     int Score = -INFINITE;
     
     for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {
+        PickNextMove(MoveNum, list);
+        
         if(!MakeMove(pos, list->moves[MoveNum].move)) {
             continue;
         }

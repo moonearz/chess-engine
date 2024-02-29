@@ -21,16 +21,18 @@
 #define PERFT_3 "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8"
 #define PERFT_4 "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10"
 #define MATE_IN_3 "2rr3k/pp3pp1/1nnqbN1p/3pN3/2pP4/2P3Q1/PPB4P/R4RK1 w - -"
+#define SCOTCH_GAME "r1b1k2r/ppppnppp/2n2q2/2b5/3NP3/2P1B3/PP3PPP/RN1QKB1R w KQkq - 0 1"
 
 int main() {
     AllInit();
 
     S_BOARD board[1];
+    InitPvTable(board->PvTable);
     S_MOVELIST list[1];
     S_SEARCHINFO info[1];
 
     //PARSE MOVES, NEED VALID INPUT
-    ParseFen(MATE_IN_3, board);
+    ParseFen(SCOTCH_GAME, board);
     char input[6];
     int Move = NOMOVE;
     int pvnum = 0;
@@ -48,7 +50,7 @@ int main() {
             TakeMove(board);
         }
         else if(input[0] == 's') {
-            info->depth = 4;
+            info->depth = 5;
             SearchPosition(board, info);
         }
         else {
@@ -100,6 +102,6 @@ int main() {
         getchar();
     }
     */
-    
+    free(board->PvTable->pTable);
     return 0;
 }
