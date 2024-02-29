@@ -206,6 +206,13 @@ extern int PieceRookQueen[13];
 extern int PieceBishopQueen[13];
 extern int PieceSlides[13];
 
+extern U64 FileBBMask[8];
+extern U64 RankBBMask[8];
+
+extern U64 BlackPassedMask[64];
+extern U64 WhitePassedMask[64];
+extern U64 IsolatedMask[64];
+
 extern int Mirror64[64];
 
 /*  FUNCTIONS   */
@@ -223,6 +230,7 @@ extern int ParseFen(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
 extern void UpdateListsMaterial(S_BOARD *pos);
 extern int CheckBoard(const S_BOARD *pos);
+extern void MirrorBoard(S_BOARD *pos);
 //attack.c
 extern int SqAttacked(const int sq, const int side, const S_BOARD *pos);
 //io.c

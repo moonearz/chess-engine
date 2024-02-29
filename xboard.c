@@ -278,6 +278,15 @@ void ConsoleLoop(S_BOARD *pos, S_SEARCHINFO *info) {
 			printf("enter moves using b7b8q notation\n\n\n");
 			continue;
 		}
+		if(!strcmp(command, "mirror")) {
+			PrintBoard(pos);
+			printf("Eval: %d\n", EvalPosition(pos));
+			MirrorBoard(pos);
+			PrintBoard(pos);
+			printf("Eval: %d\n", EvalPosition(pos));
+			MirrorBoard(pos);
+			continue;
+		}
 
 		if(!strcmp(command, "setboard")){
 			engineSide = BOTH;
