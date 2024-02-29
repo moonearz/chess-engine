@@ -165,14 +165,29 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
         depth++;
     }
 
+    int Score = -INFINITE;
+
+    //there are rare cases where this would cause problems, zugzwang with pieces
+    if(DoNull && !InCheck && pos->ply && (pos->Pces[pos->side] > 0) && depth >= 4) {
+        MakeNullMove(pos);
+        Score = -AlphaBeta(-beta, -beta + 1, depth - 3, pos, info, FALSE);
+        TakeNullMove(pos);
+        if(info->stopped == TRUE) {
+            return 0;
+        }
+        if(Score >= beta)  {
+            return beta;
+        }
+    }
+
     S_MOVELIST list[1];
     GenerateAllMoves(pos, list);
     int MoveNum = 0;
     int Legal = 0;
     int OldAlpha = alpha;
     int BestMove = NOMOVE;
-    int Score = -INFINITE;
     int PvMove = ProbePvTable(pos);
+    Score = -INFINITE;
 
     if(PvMove != NOMOVE) {
         for(MoveNum = 0; MoveNum < list->count; ++MoveNum) {

@@ -47,15 +47,15 @@ int main() {
 			UCILoop(pos, info);
 			if(info->quit == TRUE) break;
 			continue;
-		} else if (!strncmp(line, "xboard",6))	{
+		} else if (!strncmp(line, "xboard", 6))	{
 			XBoardLoop(pos, info);
 			if(info->quit == TRUE) break;
 			continue;
-		} else if (!strncmp(line, "console",7))	{
+		} else if (!strncmp(line, "console", 7))	{
 			ConsoleLoop(pos, info);
 			if(info->quit == TRUE) break;
 			continue;
-		} else if(!strncmp(line, "quit",4))	{
+		} else if(!strncmp(line, "quit", 4))	{
 			break;
 		}
 	}
