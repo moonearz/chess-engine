@@ -66,6 +66,11 @@ int checkresult(S_BOARD *pos) {
     }
 }
 
+void PrintOptions() {
+	printf("feature ping=1 setboard=1 colors=0 usermove=1 memory=1\n");
+	printf("feature done=1\n");
+}
+
 void XBoardLoop(S_BOARD *pos, S_SEARCHINFO *info) {
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
@@ -133,6 +138,7 @@ void XBoardLoop(S_BOARD *pos, S_SEARCHINFO *info) {
 		}
 
 		if(!strcmp(command, "protover")){
+            PrintOptions();
 		    continue;
 		}
 
