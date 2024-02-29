@@ -45,7 +45,6 @@ void InitPvTable(S_PVTABLE *table) {
     free(table->pTable);
     table->pTable = (S_PVENTRY *) malloc(table->numEntries * sizeof(S_PVENTRY));
     ClearTable(table);
-    printf("PvTable init complete with %d entries\n", table->numEntries);
 }
 
 void StorePvMove(const S_BOARD *pos, const int move) {

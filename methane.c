@@ -1,5 +1,7 @@
 #include "stdio.h"
 #include "defs.h"
+#include "stdlib.h"
+#include "string.h"
 
 //fen examples
 #define FEN1 "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
@@ -25,7 +27,40 @@
 
 int main() {
     AllInit();
-    UCILoop();
+    
+    S_BOARD pos[1];
+    S_SEARCHINFO info[1];
+    InitPvTable(pos->PvTable);
+
+    printf("type console for console mode\n");
+
+    char line[256];
+	while (TRUE) {
+		memset(&line[0], 0, sizeof(line));
+
+		fflush(stdout);
+		if (!fgets(line, 256, stdin))
+			continue;
+		if (line[0] == '\n')
+			continue;
+		if (!strncmp(line, "uci",3)) {
+			UCILoop(pos, info);
+			if(info->quit == TRUE) break;
+			continue;
+		} else if (!strncmp(line, "xboard",6))	{
+			XBoardLoop(pos, info);
+			if(info->quit == TRUE) break;
+			continue;
+		} else if (!strncmp(line, "console",7))	{
+			ConsoleLoop(pos, info);
+			if(info->quit == TRUE) break;
+			continue;
+		} else if(!strncmp(line, "quit",4))	{
+			break;
+		}
+	}
+
+    free(pos->PvTable->pTable);
     return 0;
 }
 

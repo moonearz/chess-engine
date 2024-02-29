@@ -2,6 +2,9 @@
 #include "defs.h"
 
 #define MATE 29000
+
+int rootDepth;
+
 //check if time is up
 static void CheckIn(S_SEARCHINFO *info) {
     if(info->timeset == TRUE && GetTimeMs() > info->stoptime) {
@@ -13,12 +16,12 @@ static void CheckIn(S_SEARCHINFO *info) {
 static void PickNextMove(int moveNum, S_MOVELIST *list) {
     S_MOVE temp;
     int index = 0;
-    int bestScore = 0;
+    int bestscore = 0;
     int bestNum = moveNum;
 
     for(index = moveNum; index < list->count; ++index) {
-        if(list->moves[index].score > bestScore) {
-            bestScore = list->moves[index].score;
+        if(list->moves[index].score > bestscore) {
+            bestscore = list->moves[index].score;
             bestNum = index;
         }
     }
@@ -236,27 +239,47 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
     ClearForSearch(pos, info);
 
     //iterative deepening
-    for(currentDepth = 1; currentDepth <= info->depth; ++currentDepth) {
-        bestscore = AlphaBeta(-INFINITE, INFINITE, currentDepth, pos, info, TRUE);
+    if(bestmove == NOMOVE) {
+		for( currentDepth = 1; currentDepth <= info->depth; ++currentDepth ) {
+			rootDepth = currentDepth;
+			bestscore = AlphaBeta(-INFINITE, INFINITE, currentDepth, pos, info, TRUE);
 
-        if(info->stopped == TRUE) {
-            break;
-        }
+			if(info->stopped == TRUE) {
+				break;
+			}
 
-        pvMoves = GetPvLine(currentDepth, pos);
-        bestmove = pos->PvArray[0];
-
-        printf("info score cp %d depth %d nodes %ld time %d ", bestscore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
-        printf("pv");
-            for(pvNum = 0; pvNum < pvMoves; ++pvNum) {
-                printf(" %s", PrMove(pos->PvArray[pvNum]));
+			pvMoves = GetPvLine(currentDepth, pos);
+			bestmove = pos->PvArray[0];
+			if(info->GAME_MODE == UCIMODE) {
+				printf("info score cp %d depth %d nodes %ld time %d ",
+					bestscore,currentDepth,info->nodes,GetTimeMs()-info->starttime);
+			} else if(info->GAME_MODE == XBOARDMODE && info->POST_THINKING == TRUE) {
+				printf("%d %d %d %ld ",
+					currentDepth,bestscore,(GetTimeMs()-info->starttime)/10,info->nodes);
+			} else if(info->POST_THINKING == TRUE) {
+				printf("score:%d depth:%d nodes:%ld time:%d(ms) ",
+					bestscore,currentDepth,info->nodes,GetTimeMs()-info->starttime);
+			}
+			if(info->GAME_MODE == UCIMODE || info->POST_THINKING == TRUE) {
+				pvMoves = GetPvLine(currentDepth, pos);
+				if(!info->GAME_MODE == XBOARDMODE) {
+					printf("pv");
+				}
+				for(pvNum = 0; pvNum < pvMoves; ++pvNum) {
+					printf(" %s",PrMove(pos->PvArray[pvNum]));
+				}
+				printf("\n");
             }
-            printf("\n");
-            //printf("Ordering: %.2f\n", info->fhf/info->fh);
-    }
-    /* 
-    UCI protocol format:
-    info score cp 13 depth 1 nodes 13 time 15 pv f1b5
-    */
-    printf("bestmove %s\n", PrMove(bestmove));
+		}
+	}
+    if(info->GAME_MODE == UCIMODE) {
+		printf("bestmove %s\n",PrMove(bestmove));
+	} else if(info->GAME_MODE == XBOARDMODE) {
+		printf("move %s\n",PrMove(bestmove));
+		MakeMove(pos, bestmove);
+	} else {
+		printf("\n\nmethane moves %s\n\n",PrMove(bestmove));
+		MakeMove(pos, bestmove);
+		PrintBoard(pos);
+	}
 }
