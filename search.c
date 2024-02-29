@@ -25,6 +25,7 @@ static void PickNextMove(int moveNum, S_MOVELIST *list) {
     list->moves[moveNum] = list->moves[bestNum];
     list->moves[bestNum] = temp;
 }
+
 static int IsRepetition(const S_BOARD *pos) {
     int index = 0;
 
@@ -245,7 +246,7 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
         pvMoves = GetPvLine(currentDepth, pos);
         bestmove = pos->PvArray[0];
 
-        printf("depth: %d score: %d move: %s nodes: %ld ", currentDepth, bestscore, PrMove(bestmove), info->nodes);
+        printf("info score cp %d depth %d nodes %ld time %d ", bestscore, currentDepth, info->nodes, GetTimeMs() - info->starttime);
         printf("pv");
             for(pvNum = 0; pvNum < pvMoves; ++pvNum) {
                 printf(" %s", PrMove(pos->PvArray[pvNum]));
@@ -253,4 +254,9 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
             printf("\n");
             printf("Ordering: %.2f\n", info->fhf/info->fh);
     }
+    /* 
+    UCI protocol format:
+    info score cp 13 depth 1 nodes 13 time 15 pv f1b5
+    */
+    printf("bestmove %s\n", PrMove(bestmove));
 }
