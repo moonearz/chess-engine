@@ -246,6 +246,7 @@ extern void perfttest(int depth, S_BOARD *pos);
 extern void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info);
 //misc.c
 extern int GetTimeMs();
+extern void ReadInput(S_SEARCHINFO *info);
 //pvtable.c
 extern void InitPvTable(S_PVTABLE *table);
 extern void StorePvMove(const S_BOARD *pos, const int move);
