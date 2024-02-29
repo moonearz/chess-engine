@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "defs.h"
 
+#define MATE 29000
 //check if time is up
 static void CheckIn() {
 
@@ -100,7 +101,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
 
     if(Legal == 0) {
         if(SqAttacked(pos->KingSq[pos->side], pos->side^1, pos)) {
-            return -INFINITE + pos->ply;
+            return -MATE + pos->ply;
         }
         else {
             return 0;
