@@ -67,18 +67,28 @@ int MoveExists(S_BOARD *pos, const int move) {
 }
 
 static void AddQuietMove(const S_BOARD *pos, int move,  S_MOVELIST *list) {
+    ASSERT(SqOnBoard(FROMSQ(move)));
+    ASSERT(SqOnBoard(TOSQ(move)));
+
     list->moves[list->count].move = move;
     list->moves[list->count].score = 0;
     list->count++;
 }
 
 static void AddCaptureMove(const S_BOARD *pos, int move,  S_MOVELIST *list) {
+    ASSERT(SqOnBoard(FROMSQ(move)));
+    ASSERT(SqOnBoard(TOSQ(move)));
+    ASSERT(PieceValid(CAPTURED(move)));
+
     list->moves[list->count].move = move;
     list->moves[list->count].score = MvvLvaScores[CAPTURED(move)][pos->pieces[FROMSQ(move)]];
     list->count++;
 }
 
 static void AddEnPasMove(const S_BOARD *pos, int move,  S_MOVELIST *list) {
+    ASSERT(SqOnBoard(FROMSQ(move)));
+    ASSERT(SqOnBoard(TOSQ(move)));
+
     list->moves[list->count].move = move;
     list->moves[list->count].score = 105;
     list->count++;
@@ -180,12 +190,14 @@ void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list) {
                 AddWPCapMove(pos, sq, sq + 11, pos->pieces[sq + 11], list);
             }
 
-            if(sq + 9 == pos->enPas) {
-                AddCaptureMove(pos, MOVE(sq, sq + 9, EMPTY, EMPTY, MFEP), list);
-            }
+            if(pos->enPas != NO_SQ) {
+                if(sq + 9 == pos->enPas) {
+                    AddEnPasMove(pos, MOVE(sq, sq + 9, EMPTY, EMPTY, MFEP), list);
+                }
 
-            if(sq + 11 == pos->enPas) {
-                AddCaptureMove(pos, MOVE(sq, sq + 11, EMPTY, EMPTY, MFEP), list);
+                if(sq + 11 == pos->enPas) {
+                    AddEnPasMove(pos, MOVE(sq, sq + 11, EMPTY, EMPTY, MFEP), list);
+                }
             }
         }
         if(pos->castlePerm & WKCA) {
@@ -223,12 +235,14 @@ void GenerateAllMoves(const S_BOARD *pos, S_MOVELIST *list) {
                 AddBPCapMove(pos, sq, sq - 11, pos->pieces[sq - 11], list);
             }
 
-            if(sq - 9 == pos->enPas) {
-                AddCaptureMove(pos, MOVE(sq, sq - 9, EMPTY, EMPTY, MFEP), list);
-            }
+            if(pos->enPas != NO_SQ) {
+                if(sq - 9 == pos->enPas) {
+                    AddEnPasMove(pos, MOVE(sq, sq - 9, EMPTY, EMPTY, MFEP), list);
+                }
 
-            if(sq - 11 == pos->enPas) {
-                AddCaptureMove(pos, MOVE(sq, sq - 11, EMPTY, EMPTY, MFEP), list);
+                if(sq - 11 == pos->enPas) {
+                    AddEnPasMove(pos, MOVE(sq, sq - 11, EMPTY, EMPTY, MFEP), list);
+                }
             }
         }
         if(pos->castlePerm & BKCA) {
