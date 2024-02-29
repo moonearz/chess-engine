@@ -1,6 +1,10 @@
 #include "stdio.h"
 #include "defs.h"
 
+const int PawnIsolated = -10;
+const int PawnPassed[8] = { 0, 5, 10, 20, 35, 60, 100, 200};
+const int RookOpenFile = 5;
+
 const int PawnTable[64] = {
 0	,	0	,	0	,	0	,	0	,	0	,	0	,	0	,
 10	,	10	,	0	,	-10	,	-10	,	0	,	10	,	10	,
@@ -78,6 +82,14 @@ int EvalPosition(const S_BOARD *pos) {
         sq = pos->pList[pce][pceNum];
         ASSERT(SqOnBoard(sq));
         score += PawnTable[SQ64(sq)];
+
+		if(IsolatedMask[SQ64(sq)] & pos->pawns[WHITE] == 0) {
+			score += PawnIsolated;
+		}
+
+		if(WhitePassedMask[SQ64(sq)] & pos->pawns[BLACK] == 0) {
+			score += PawnPassed[RanksBrd[sq]];
+		}
     }
     
     pce = bP;
@@ -85,6 +97,14 @@ int EvalPosition(const S_BOARD *pos) {
         sq = pos->pList[pce][pceNum];
         ASSERT(SqOnBoard(sq));
         score -= PawnTable[MIRROR64(SQ64(sq))];
+
+		if(IsolatedMask[SQ64(sq)] & pos->pawns[BLACK] == 0) {
+			score -= PawnIsolated;
+		}
+
+		if(BlackPassedMask[SQ64(sq)] & pos->pawns[WHITE] == 0) {
+			score -= PawnPassed[7 - RanksBrd[sq]];
+		}
     }
 
     pce = wN;	
