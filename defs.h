@@ -111,7 +111,7 @@ typedef struct {
 
     //move ordering
     int searchHistory[13][BRD_SQ_NUM];
-    int searchEnders[2][MAXDEPTH];
+    int searchKillers[2][MAXDEPTH];
 } S_BOARD;
 
 typedef struct {

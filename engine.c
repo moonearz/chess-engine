@@ -50,7 +50,7 @@ int main() {
             TakeMove(board);
         }
         else if(input[0] == 's') {
-            info->depth = 5;
+            info->depth = 6;
             SearchPosition(board, info);
         }
         else {
