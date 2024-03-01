@@ -142,6 +142,9 @@ void UCILoop(S_BOARD *pos, S_SEARCHINFO *info) {
         else if(!strncmp(line, "go", 2)) {
             ParseGo(line, info, pos);
         }
+        else if(!strncmp(line, "analyze", 7)) {
+            ParseGo("go infinite", info, pos);
+        }
         else if(!strncmp(line, "quit", 4)) {
             info->quit = TRUE;
             break;

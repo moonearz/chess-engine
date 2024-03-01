@@ -99,8 +99,8 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
     GenerateAllCaptures(pos, list);
     int MoveNum = 0;
     int Legal = 0;
-    int OldAlpha = alpha;
-    int BestMove = NOMOVE;
+    //int OldAlpha = alpha;
+    //int BestMove = NOMOVE;
     Score = -INFINITE;
     int PvMove = ProbePvTable(pos);
 
@@ -128,13 +128,15 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
                 return beta;
             }
             alpha = Score;
-            BestMove = list->moves[MoveNum].move;
+            //BestMove = list->moves[MoveNum].move;
         }
     }
 
+    /*
     if(alpha != OldAlpha) {
         StorePvMove(pos, BestMove);
     }
+    */
 
     return alpha;
 }
@@ -142,7 +144,7 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
 static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO *info, int DoNull) {
     ASSERT(CheckBoard(pos));
 
-    if(depth == 0) {
+    if(depth <= 0) {
         return Quiescence(alpha, beta, pos, info);
     }
 
@@ -168,7 +170,7 @@ static int AlphaBeta(int alpha, int beta, int depth, S_BOARD *pos, S_SEARCHINFO 
     int Score = -INFINITE;
 
     //there are rare cases where this would cause problems, zugzwang with pieces
-    if(DoNull && !InCheck && pos->ply && (pos->Pces[pos->side] > 0) && depth >= 4) {
+    if(DoNull && !InCheck && pos->ply && (pos->Pces[pos->side] > 1) && depth >= 4) {
         MakeNullMove(pos);
         Score = -AlphaBeta(-beta, -beta + 1, depth - 3, pos, info, FALSE);
         TakeNullMove(pos);

@@ -30,6 +30,7 @@ int main() {
     
     S_BOARD pos[1];
     S_SEARCHINFO info[1];
+    info->quit = FALSE;
     InitPvTable(pos->PvTable);
 
     printf("type console for console mode\n");
