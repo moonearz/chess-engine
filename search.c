@@ -294,12 +294,12 @@ void SearchPosition(S_BOARD *pos, S_SEARCHINFO *info) {
 		}
 	}
     if(info->GAME_MODE == UCIMODE) {
-		printf("bestmove %s\n",PrMove(bestmove));
+		printf("bestmove %s\n", PrMove(bestmove));
 	} else if(info->GAME_MODE == XBOARDMODE) {
-		printf("move %s\n",PrMove(bestmove));
+		printf("move %s\n", PrMove(bestmove));
 		MakeMove(pos, bestmove);
 	} else {
-		printf("\n\nmethane moves %s\n\n",PrMove(bestmove));
+		printf("\n\nmethane moves %s\n\n", PrMove(bestmove));
 		MakeMove(pos, bestmove);
 		PrintBoard(pos);
 	}
