@@ -323,6 +323,7 @@ void MakeNullMove(S_BOARD *pos) {
 
     pos->side ^= 1;
     pos->hisPly++;
+    pos->fiftyMove++;
     HASH_SIDE;
 
     ASSERT(CheckBoard(pos));
@@ -335,6 +336,7 @@ void TakeNullMove(S_BOARD *pos) {
 
     pos->hisPly--;
     pos->ply--;
+    pos->fiftyMove--;
 
     if(pos->enPas != NO_SQ) HASH_EP;
 

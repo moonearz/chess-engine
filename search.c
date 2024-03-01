@@ -99,8 +99,8 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
     GenerateAllCaptures(pos, list);
     int MoveNum = 0;
     int Legal = 0;
-    //int OldAlpha = alpha;
-    //int BestMove = NOMOVE;
+    int OldAlpha = alpha;
+    int BestMove = NOMOVE;
     Score = -INFINITE;
     int PvMove = ProbePvTable(pos);
 
@@ -128,15 +128,13 @@ static int Quiescence(int alpha, int beta, S_BOARD *pos, S_SEARCHINFO *info) {
                 return beta;
             }
             alpha = Score;
-            //BestMove = list->moves[MoveNum].move;
+            BestMove = list->moves[MoveNum].move;
         }
     }
 
-    /*
     if(alpha != OldAlpha) {
         StorePvMove(pos, BestMove);
     }
-    */
 
     return alpha;
 }

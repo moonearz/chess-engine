@@ -264,7 +264,6 @@ void ConsoleLoop(S_BOARD *pos, S_SEARCHINFO *info) {
 		if(!strcmp(command, "help")) {
 			printf("Commands:\n");
 			printf("quit - quit game\n");
-			printf("force - computer will not think\n");
 			printf("print - show board\n");
 			printf("post - show thinking\n");
 			printf("nopost - do not show thinking\n");
@@ -311,11 +310,6 @@ void ConsoleLoop(S_BOARD *pos, S_SEARCHINFO *info) {
 
 		if(!strcmp(command, "nopost")) {
 			info->POST_THINKING = FALSE;
-			continue;
-		}
-
-		if(!strcmp(command, "force")) {
-			engineSide = BOTH;
 			continue;
 		}
 

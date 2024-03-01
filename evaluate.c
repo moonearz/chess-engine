@@ -75,7 +75,7 @@ const int KingO[64] = {
 	-70	,	-70	,	-70	,	-70	,	-70	,	-70	,	-70	,	-70		
 };
 
-// sjeng 11.2 with best play
+// sjeng 11.2, assumes best play
 //8/6R1/2k5/6P1/8/8/4nP2/6K1 w - - 1 41 
 int MaterialDraw(const S_BOARD *pos) {
 
