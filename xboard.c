@@ -67,11 +67,13 @@ int checkresult(S_BOARD *pos) {
 }
 
 void PrintOptions() {
-	printf("feature ping=1 setboard=1 colors=0 usermove=1 memory=1\n");
+	//you can support analyze now in XBoard but I can't be bothered
+	printf("feature ping=1 setboard=1 colors=0 usermove=1 memory=1 analyze=0\n");
 	printf("feature done=1\n");
 }
 
 void XBoardLoop(S_BOARD *pos, S_SEARCHINFO *info) {
+	info->GAME_MODE = XBOARDMODE;
     setbuf(stdin, NULL);
     setbuf(stdout, NULL);
 
@@ -200,7 +202,7 @@ void XBoardLoop(S_BOARD *pos, S_SEARCHINFO *info) {
 			ParseFen(inBuf+9, pos);
 			continue;
 		}
-
+		
 		if(!strcmp(command, "go")) {
 			engineSide = pos->side;
 			continue;
